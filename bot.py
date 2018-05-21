@@ -15,11 +15,20 @@ extensions = ["cogs.fun",
 @bot.event
 async def on_ready():
     print("Logged in as {}#{} ({})\n=============".format(bot.user.name, bot.user.discriminator, bot.user.id))
+    await bot.change_presence(status=type, activity=discord.Game(f"on {len(bot.guilds)} servers."))
     for extension in extensions:
         try:
             bot.load_extension(extension)
         except Exception as e:
             print("Error: Couldn't load extension {}\n{}: {}".format(extension, type(e).__name__, e))
+
+@bot.event
+async def on_guild_join(guild):
+    await bot.change_presence(status=type, activity=discord.Game(f"on {len(bot.guilds)} servers."))
+
+@bot.event
+async def on_guild_remove(guild):
+    await bot.change_presence(status=type, activity=discord.Game(f"on {len(bot.guilds)} servers."))
 
 
 @bot.event
